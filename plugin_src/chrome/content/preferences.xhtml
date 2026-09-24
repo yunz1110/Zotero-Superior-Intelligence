@@ -1,0 +1,370 @@
+<!--
+input: Zotero PreferencePanes runtime, user input preferences
+output: Rendered interactive preference pane fragment, synchronized extensions.zoteromineru preferences
+pos: Interactive configuration UI fragment for MinerU API and LLM parameters in Zotero 7/10
+-->
+<vbox id="zotero-prefpane-mineru" class="main-section" flex="1" style="overflow-y: auto; padding: 14px 18px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
+  <html:style>
+    .mineru-pref-container {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .mineru-pref-group {
+      margin-bottom: 16px;
+      padding: 14px 18px;
+      border: 1px solid var(--material-border, #d1d5db);
+      border-radius: 8px;
+      background: var(--material-background, #fafafa);
+    }
+    .mineru-pref-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+      color: var(--fill-primary, #111827);
+    }
+    .mineru-form-row {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mineru-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--fill-secondary, #374151);
+    }
+    .mineru-input, .mineru-select {
+      appearance: none;
+      -moz-appearance: none;
+      padding: 6px 10px;
+      border: 1px solid var(--material-border, #d1d5db);
+      border-radius: 6px;
+      font-size: 12.5px;
+      background: var(--material-background, #ffffff);
+      color: var(--fill-primary, #111827);
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .mineru-input:focus, .mineru-select:focus {
+      border-color: var(--accent-blue, #2563eb);
+      outline: 2px solid color-mix(in srgb, var(--accent-blue, #2563eb) 20%, transparent);
+    }
+    .mineru-help {
+      font-size: 11px;
+      color: var(--fill-tertiary, #6b7280);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+    .mineru-check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .mineru-check-row html|input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+    .mineru-check-row html|label {
+      font-size: 12.5px;
+      color: var(--fill-primary, #1f2937);
+      cursor: pointer;
+    }
+    .mineru-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    .mineru-btn {
+      appearance: none;
+      -moz-appearance: none;
+      padding: 5px 12px;
+      border: 1px solid var(--material-border, #d1d5db);
+      border-radius: 6px;
+      background: var(--material-button, #f3f4f6);
+      color: var(--fill-primary, #1f2937);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .mineru-btn:hover {
+      background: #e5e7eb;
+      border-color: #9ca3af;
+    }
+    .mineru-btn-primary {
+      background: var(--accent-blue, #2563eb);
+      color: #ffffff;
+      border-color: var(--accent-blue, #2563eb);
+    }
+    .mineru-btn-primary:hover {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+    .mineru-btn-outline {
+      background: transparent;
+      color: var(--accent-blue, #2563eb);
+      border-color: var(--accent-blue, #2563eb);
+    }
+    .mineru-btn-outline:hover {
+      background: #eff6ff;
+    }
+    #mineru-status-box {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .mineru-preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: var(--fill-secondary, #4b5563);
+    }
+    .mineru-mode-active {
+      border-color: var(--accent-blue, #2563eb) !important;
+      background: var(--accent-blue, #2563eb) !important;
+      color: #fff !important;
+    }
+    #llmSlot { min-height: 180px; padding: 5px; background: var(--material-background, #fff); }
+    #llmSlot option { padding: 6px 8px; border-radius: 4px; }
+    .si-usage-card { border: 1px solid var(--material-border, #d1d5db); border-radius: 8px; padding: 14px; background: var(--material-background, #fff); }
+    .si-usage-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 12px; }
+    .si-usage-stat-label { display: block; color: var(--fill-secondary, #6b7280); font-size: 12px; }
+    .si-usage-stat-value { display: block; font-size: 21px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+    .si-usage-cache-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--fill-secondary, #6b7280); }
+    .si-usage-track { height: 5px; margin: 5px 0 8px; background: #eceef1; border-radius: 4px; }
+    #si-usage-cache-fill { height: 100%; width: 0; background: #2ca66d; border-radius: 4px; }
+    .si-usage-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px; }
+    .si-usage-toolbar strong { margin-right: auto; }
+    .si-usage-toolbar select { width: auto; min-width: 105px; }
+    .si-usage-scroll { box-sizing: border-box; width: 100%; padding: 4px 4px 10px; min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #b8c5d6 #f3f5f8; }
+    .si-usage-scroll:focus-visible { outline: 2px solid #3979ce; outline-offset: 2px; border-radius: 4px; }
+    .si-usage-calendar { width: max-content; min-width: 0; }
+    .si-usage-grid, .si-usage-months { display: grid; grid-template-columns: repeat(var(--usage-columns, 53), 18px); gap: 4px; }
+    .si-usage-grid { grid-template-rows: repeat(7, minmax(0, 1fr)); grid-auto-flow: column; align-items: start; }
+    /* Reset host button metrics so daily cells remain square in Zotero. */
+    #zotero-prefpane-mineru .si-usage-day { appearance: none; -moz-appearance: none; display: block; box-sizing: border-box; aspect-ratio: 1 / 1; width: 100%; height: auto; min-width: 0; min-height: 0; min-inline-size: 0; min-block-size: 0; margin: 0; padding: 0; border: 0; border-radius: 2px; background: #e9edf1; box-shadow: none; font-size: 0; line-height: 0; cursor: pointer; }
+    #zotero-prefpane-mineru .si-usage-day:hover { box-shadow: 0 0 0 1px #8b9bb0; }
+    #zotero-prefpane-mineru .si-usage-day[aria-pressed="true"] { outline: 2px solid #315f9f; outline-offset: 1px; }
+    #zotero-prefpane-mineru .si-usage-day[data-level="1"] { background: #dbe6ff; }
+    #zotero-prefpane-mineru .si-usage-day[data-level="2"] { background: #afc8ff; }
+    #zotero-prefpane-mineru .si-usage-day[data-level="3"] { background: #78a2f3; }
+    #zotero-prefpane-mineru .si-usage-day[data-level="4"] { background: #346de2; }
+    .si-usage-day[data-future="true"] { opacity: .35; }
+    .si-usage-day[data-today="true"] { outline: 1px solid #2554bc; }
+    .si-usage-months > span { white-space: nowrap; line-height: 1.4; }
+    .si-usage-months { margin-top: 8px; color: var(--fill-secondary, #6b7280); font-size: 10px; }
+    .si-usage-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 11px; color: var(--fill-secondary, #6b7280); }
+    .si-usage-legend { display: flex; align-items: center; gap: 4px; }
+    .si-usage-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #e9edf1; }
+    .si-usage-legend i:nth-of-type(2) { background: #dbe6ff; }.si-usage-legend i:nth-of-type(3) { background: #afc8ff; }
+    .si-usage-legend i:nth-of-type(4) { background: #78a2f3; }.si-usage-legend i:nth-of-type(5) { background: #346de2; }
+    .si-usage-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; font-size: 11px; letter-spacing: .08em; color: #3865a4; }
+    .si-usage-live { border: 1px solid #d2e8df; border-radius: 20px; padding: 3px 8px; background: #f0f8f4; color: #247563; letter-spacing: 0; }
+    .si-usage-live::before { content: "●"; margin-right: 5px; }
+    .si-usage-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .si-usage-stats > div { min-width: 0; border: 1px solid #e4eaf1; border-radius: 8px; padding: 12px; background: #f8fafc; }
+    .si-usage-stat-value { font-size: 23px; font-weight: 600; color: #315f9f; overflow-wrap: anywhere; }
+    .si-usage-card details { color: #627086; font-size: 12px; margin-top: 8px; }
+    .si-usage-card summary { cursor: pointer; }
+    .si-usage-toolbar { border-top: 1px solid #e4eaf1; padding-top: 16px; }
+    .si-usage-chart-title { margin: 18px 0 12px; font-size: 12px; color: #627086; }
+    .si-usage-monthly { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; height: 64px; align-items: end; border-bottom: 1px solid #dce4ed; }
+    .si-usage-month-bar { width: 55%; max-width: 18px; justify-self: center; min-height: 3px; border: 0; border-radius: 4px 4px 0 0; background: #719bd1; }
+    .si-usage-month-labels { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; margin: 6px 0 18px; text-align: center; white-space: nowrap; font-size: 10px; color: #627086; }
+    @media (max-width: 670px) { .si-usage-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    /* Scoped light palette: the host preference window may use another theme. */
+    #zotero-prefpane-mineru { --material-background: #fff; --material-border: #dce4ed; --material-button: #fff; --fill-primary: #243247; --fill-secondary: #627086; --fill-tertiary: #627086; --accent-blue: #315f9f; color: #243247; background: #f6f8fb; color-scheme: light; }
+    .mineru-pref-container { width: 100%; max-width: 900px; min-width: 0; margin: 0 auto; }
+    .mineru-pref-header { margin: 4px 0 20px; }
+    .mineru-pref-header h1 { font-size: 22px; font-weight: 650; margin: 0 0 6px; letter-spacing: -.02em; }
+    .mineru-pref-header p { color: #627086; font-size: 12px; line-height: 1.65; margin: 0; }
+    .mineru-pref-group { padding: 20px; border-radius: 10px; margin: 0 0 16px; min-width: 0; }
+    .mineru-pref-title { margin-bottom: 16px; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #e8edf3; }
+    .mineru-form-row { display: grid; grid-template-columns: 145px minmax(0, 1fr); align-items: start; column-gap: 16px; row-gap: 6px; margin-bottom: 16px; }
+    .mineru-form-row > .mineru-label { grid-column: 1; grid-row: 1; padding-top: 8px; line-height: 1.5; }
+    .mineru-form-row > :not(.mineru-label) { grid-column: 2; min-width: 0; }
+    .mineru-form-row > .mineru-btn-row { margin: 0; }
+    .mineru-input, .mineru-select { min-height: 34px; padding: 7px 10px; }
+    .mineru-select { appearance: auto; -moz-appearance: auto; }
+    .mineru-help { line-height: 1.65; overflow-wrap: anywhere; }
+    .mineru-preset-bar { flex-wrap: wrap; gap: 8px; margin: 8px 0 18px; }
+    .mineru-btn { min-height: 32px; line-height: 1.4; padding: 6px 12px; }
+    .mineru-btn:hover { background: #f0f5fb; border-color: #9bb2d1; }
+    .mineru-btn-primary:hover { background: #254c83; color: #fff; }
+    .mineru-btn-outline { border-color: #dce4ed; }
+    .mineru-btn:focus-visible, .si-usage-card :is(button, summary):focus-visible { outline: 2px solid #3979ce; outline-offset: 2px; }
+    .mineru-check-row { align-items: flex-start; line-height: 1.7; }
+    .mineru-check-row input { accent-color: #315f9f; flex-shrink: 0; }
+    .si-usage-card { margin-top: 14px; padding: 18px; }
+    #llmSlot { min-height: 138px; }
+    @media (max-width: 580px) {
+      .mineru-pref-group { padding: 14px; }
+      .mineru-form-row { display: flex; gap: 6px; }
+      .mineru-form-row > .mineru-label { padding-top: 0; }
+      .si-usage-toolbar select { width: 100%; }
+    }
+  </html:style>
+
+  <vbox class="mineru-pref-container">
+    <html:header class="mineru-pref-header"><html:h1>SI 设置</html:h1><html:p>配置文档解析与学术模型，管理你的科研工作流。</html:p></html:header>
+    <!-- 实时交互状态反馈条 -->
+    <html:div id="mineru-status-box"></html:div>
+
+    <!-- 模块 1: MinerU 文档解析引擎设置 -->
+    <groupbox class="mineru-pref-group">
+      <label><html:h2 class="mineru-pref-title">MinerU 文档解析引擎设置</html:h2></label>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label">
+          解析模式：
+        </html:label>
+        <html:div class="mineru-btn-row">
+          <html:button type="button" id="mineru-mode-agent" class="mineru-btn">Agent 轻量模式</html:button>
+          <html:button type="button" id="mineru-mode-precise" class="mineru-btn">精准解析模式</html:button>
+        </html:div>
+        <html:div id="mineru-mode-current" class="mineru-help"></html:div>
+        <html:div class="mineru-help">日常单篇文献推荐直接使用免 Token 的 Agent 轻量模式；长篇论文或多页专著建议使用精准模式。</html:div>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="mineruModel">精准模式解析模型：</html:label>
+        <html:select id="mineruModel" class="mineru-select" preference="extensions.zoteromineru.mineruModel">
+          <html:option value="vlm">VLM（推荐，复杂版面与扫描 PDF）</html:option>
+          <html:option value="pipeline">Pipeline（传统版面解析）</html:option>
+        </html:select>
+        <html:div class="mineru-help">此项仅用于精准模式。模型选择在 Token 鉴权之后生效；HTTP 401 与选择哪个模型无关。</html:div>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="mineruToken">
+          MinerU API Token (精准模式使用)：
+        </html:label>
+        <html:input type="password" id="mineruToken" class="mineru-input" preference="extensions.zoteromineru.mineruToken" placeholder="若使用 Agent 轻量模式可留空；精准模式请填入 API Token"/>
+        <html:div class="mineru-help">可在 mineru.net 注册获取。Agent 轻量模式无需填写。</html:div>
+      </html:div>
+
+      <!-- 交互测试与申请按钮 -->
+      <html:div class="mineru-btn-row">
+        <html:button type="button" id="mineru-btn-test-mineru" class="mineru-btn mineru-btn-primary">测试 MinerU 接口连通性</html:button>
+        <html:button type="button" id="mineru-link-mineru" class="mineru-btn mineru-btn-outline">访问 MinerU 官网申请 Token</html:button>
+      </html:div>
+    </groupbox>
+
+    <!-- 模块 2: 学术大语言模型 (LLM) 设置 -->
+    <groupbox class="mineru-pref-group">
+      <label><html:h2 class="mineru-pref-title">学术大语言模型 (LLM) 设置</html:h2></label>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmSlot">当前使用的模型配置：</html:label>
+        <html:select id="llmSlot" class="mineru-select" size="8" aria-label="模型配置列表"></html:select>
+        <html:div class="mineru-help">从列表选择并激活配置。每个配置独立保存名称、服务商、API 地址、Key 和模型；PDF 对话与控制面板使用当前配置。</html:div>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmProfileName">配置名称：</html:label>
+        <html:input type="text" id="llmProfileName" class="mineru-input" maxlength="40" placeholder="例如：论文精读 · DeepSeek"/>
+      </html:div>
+
+      <html:div class="mineru-preset-bar">
+        <html:span>快捷预设填报：</html:span>
+        <html:button type="button" id="mineru-preset-deepseek" class="mineru-btn">DeepSeek 官方</html:button>
+        <html:button type="button" id="mineru-preset-ollama" class="mineru-btn">本地 Ollama</html:button>
+        <html:button type="button" id="mineru-preset-openai" class="mineru-btn">OpenAI</html:button>
+        <html:button type="button" id="mineru-preset-qwen" class="mineru-btn">通义千问</html:button>
+        <html:button type="button" id="mineru-preset-siliconflow" class="mineru-btn">硅基流动</html:button>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmProvider">模型服务商：</html:label>
+        <html:select id="llmProvider" class="mineru-select">
+          <html:option value="deepseek">DeepSeek (官方推荐，高性价比)</html:option>
+          <html:option value="openai">OpenAI (官方 / 代理商)</html:option>
+          <html:option value="qwen">通义千问 / 阿里云百炼</html:option>
+          <html:option value="siliconflow">硅基流动</html:option>
+          <html:option value="ollama">本地 Ollama</html:option>
+          <html:option value="custom">Custom (本地 Ollama / vLLM / 其他兼容端点)</html:option>
+        </html:select>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmApiBase">API Base URL：</html:label>
+        <html:input type="text" id="llmApiBase" class="mineru-input" placeholder="https://api.deepseek.com/v1"/>
+        <html:div class="mineru-help">兼容 OpenAI /v1/chat/completions 规范的服务端点。</html:div>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmApiKey">API Key：</html:label>
+        <html:input type="password" id="llmApiKey" class="mineru-input" placeholder="sk-xxxx..."/>
+        <html:div class="mineru-help">用于大模型学术精读推理的鉴权秘钥。</html:div>
+      </html:div>
+
+      <html:div class="mineru-form-row">
+        <html:label class="mineru-label" for="llmModel">模型名称 (Model Name)：</html:label>
+        <html:input type="text" id="llmModel" class="mineru-input" placeholder="deepseek-flash"/>
+      </html:div>
+
+      <!-- 交互测试与申请按钮 -->
+      <html:div class="mineru-btn-row">
+        <html:button type="button" id="si-save-profile" class="mineru-btn mineru-btn-primary">保存当前配置</html:button>
+        <html:button type="button" id="mineru-btn-test-llm" class="mineru-btn">测试大模型连接响应</html:button>
+        <html:button type="button" id="mineru-link-deepseek" class="mineru-btn mineru-btn-outline">申请 DeepSeek API Key</html:button>
+      </html:div>
+    </groupbox>
+
+    <groupbox class="mineru-pref-group">
+      <label><html:h2 class="mineru-pref-title">LLM Token 用量</html:h2></label>
+      <html:div class="mineru-help">仅统计模型接口实际返回的 Token；旧版记录未分配到具体配置，缓存命中率仅在接口提供缓存 Token 时显示。</html:div>
+      <html:div class="si-usage-card">
+        <html:div class="si-usage-head"><html:strong>SI / TOKEN MONITOR</html:strong><html:span class="si-usage-live">实时记录</html:span></html:div>
+        <html:div class="si-usage-stats">
+          <html:div><html:span class="si-usage-stat-label">累计用量</html:span><html:strong id="si-usage-total" class="si-usage-stat-value">0</html:strong></html:div>
+          <html:div><html:span class="si-usage-stat-label">今日</html:span><html:strong id="si-usage-today" class="si-usage-stat-value">0</html:strong></html:div>
+          <html:div><html:span class="si-usage-stat-label">所选年份</html:span><html:strong id="si-usage-year-total" class="si-usage-stat-value">0</html:strong></html:div>
+          <html:div><html:span class="si-usage-stat-label">请求次数</html:span><html:strong id="si-usage-requests" class="si-usage-stat-value">0</html:strong></html:div>
+        </html:div>
+        <html:div class="si-usage-cache-row"><html:span>缓存命中率</html:span><html:span id="si-usage-cache">—</html:span></html:div>
+        <html:div class="si-usage-track"><html:div id="si-usage-cache-fill"></html:div></html:div>
+        <html:details><html:summary>用量明细</html:summary><html:div id="si-usage-breakdown" class="mineru-help"></html:div></html:details>
+        <html:div class="si-usage-toolbar">
+          <html:strong>每日用量</html:strong>
+          <html:select id="si-usage-profile" class="mineru-select"><html:option value="all">全部配置</html:option></html:select>
+          <html:select id="si-usage-year" class="mineru-select"></html:select>
+        </html:div>
+        <html:div class="si-usage-chart-title">月度趋势 / Token</html:div>
+        <html:div id="si-usage-monthly" class="si-usage-monthly"></html:div>
+        <html:div class="si-usage-month-labels"><html:span>1月</html:span><html:span>2月</html:span><html:span>3月</html:span><html:span>4月</html:span><html:span>5月</html:span><html:span>6月</html:span><html:span>7月</html:span><html:span>8月</html:span><html:span>9月</html:span><html:span>10月</html:span><html:span>11月</html:span><html:span>12月</html:span></html:div>
+        <html:div class="si-usage-chart-title">每日用量</html:div>
+        <html:div id="si-usage-scroll" class="si-usage-scroll" tabindex="0" role="region" aria-label="每日 Token 用量，可横向滚动查看全年"><html:div class="si-usage-calendar"><html:div id="si-usage-calendar" class="si-usage-grid"></html:div><html:div id="si-usage-months" class="si-usage-months"></html:div></html:div></html:div>
+        <html:div class="si-usage-footer"><html:span id="si-usage-detail">左右滚动查看全年，点击日期查看用量</html:span><html:span class="si-usage-legend">少 <html:i></html:i><html:i></html:i><html:i></html:i><html:i></html:i><html:i></html:i> 多</html:span></html:div>
+      </html:div>
+    </groupbox>
+
+    <!-- 模块 3: 自动化与文献库交互 -->
+    <groupbox class="mineru-pref-group">
+      <label><html:h2 class="mineru-pref-title">自动化与文献库交互</html:h2></label>
+
+      <html:div class="mineru-check-row">
+        <html:input type="checkbox" id="autoGenerateNote" preference="extensions.zoteromineru.autoGenerateNote"/>
+        <html:label for="autoGenerateNote">解析完成后自动生成 Zotero 文献笔记</html:label>
+      </html:div>
+
+      <html:div class="mineru-check-row">
+        <html:input type="checkbox" id="autoTag" preference="extensions.zoteromineru.autoTag"/>
+        <html:label for="autoTag">解析完成后自动为条目添加 #MinerU-Extracted 与 #AI-Analyzed 标签</html:label>
+      </html:div>
+    </groupbox>
+  </vbox>
+</vbox>

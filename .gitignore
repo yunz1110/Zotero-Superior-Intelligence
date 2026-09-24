@@ -1,0 +1,80 @@
+# ==========================================
+# Git Ignore Configuration for Zotero Plugin
+# ==========================================
+
+# --- Build Outputs & Binaries ---
+# 忽略历史构建产物，仅保留目录架构说明与最新稳定版安装包
+dist/*.xpi
+!dist/zotero-superior-intelligence-2.0.7.xpi
+dist/*.tmp
+dist/*.zip
+
+# --- Third-Party Templates & Decompiled Code ---
+# 排除第三方原始大安装包及反编译商业/专有代码，避免版权与仓库膨胀风险
+template/*.xpi
+template/decompiled_reference/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+
+# --- Node / JavaScript ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# --- Operating System ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- IDEs & Editors ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# --- Secrets & Environment Variables ---
+.env
+.env.*
+*.pem
+*.key
+*.cert
+
+# --- Logs & Temporary Files ---
+*.log
+*.tmp
+*.bak
+scratch/

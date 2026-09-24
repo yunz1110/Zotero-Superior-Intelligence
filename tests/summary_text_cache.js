@@ -1,0 +1,21 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+(async()=>{
+ let mtime=1,size=100,calls=0,release;
+ const ctx=vm.createContext({Zotero:{File:{pathToFile:path=>({path,exists:()=>true,get lastModifiedTime(){return mtime;},get fileSize(){return size;}})}}});
+ vm.runInContext(fs.readFileSync('plugin_src/chrome/content/scripts/summary_text_cache.js','utf8'),ctx);
+ const cache=ctx.SummaryTextCache,info={filePath:'paper.pdf',attachmentItem:{key:'ABC',libraryID:1}},config={mineruMode:'agent'};
+ const extract=async()=>{calls++;return 'full original text';};
+ assert.equal((await cache.get(info,config,extract)).cached,false);
+ assert.equal((await cache.get(info,config,extract)).cached,true);assert.equal(calls,1);
+ mtime++;assert.equal((await cache.get(info,config,extract)).cached,false);assert.equal(calls,2);
+ size++;await cache.get(info,config,extract);assert.equal(calls,3);
+ mtime++;const slow=async()=>{calls++;await new Promise(r=>release=r);return 'shared';};
+ const a=cache.get(info,config,slow),b=cache.get(info,config,slow);release();
+ const both=await Promise.all([a,b]);assert.equal(calls,4);assert.equal(both[1].cached,true);
+ mtime++;await assert.rejects(()=>cache.get(info,config,async()=>{throw Error('failure');}),/failure/);
+ await cache.get(info,config,extract);assert.equal(calls,5);
+ mtime++;await assert.rejects(()=>cache.get(info,config,async()=>''),/未提取/);
+ await cache.get(info,config,extract);assert.equal(calls,6);
+ cache.maxEntries=2;mtime++;await cache.get(info,config,extract);assert.equal(cache.entries.size,2);
+ console.log('summary text cache passed: reuse, mtime/size invalidation, concurrent extraction, failure recovery, empty text rejection and eviction');
+})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Zotero Superior Intelligence",
+  "version": "2.0.7",
+  "description": "SI literature reading assistant for Zotero 10 with PDF chat and MinerU extraction",
+  "icons": {
+    "48": "chrome/content/icons/favicon.png",
+    "96": "chrome/content/icons/favicon.png"
+  },
+  "applications": {
+    "zotero": {
+      "id": "zotero-mineru-ai@custom.org",
+      "update_url": "https://raw.githubusercontent.com/opendatalab/MinerU/master/update.json",
+      "strict_min_version": "10.0",
+      "strict_max_version": "10.0.*"
+    }
+  }
+}

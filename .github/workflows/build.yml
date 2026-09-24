@@ -1,0 +1,52 @@
+name: Build and Test Zotero Extension
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [ created ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Run Test Suite
+      run: |
+        node tests/smoke.js
+        node tests/auto_highlight.js
+        node tests/batch.js
+        node tests/dashboard.js
+        node tests/errors.js
+        node tests/library.js
+        node tests/library_ui.js
+        node tests/llm_controls.js
+        node tests/summary_text_cache.js
+        node tests/usage_layout.js
+
+    - name: Verify UI Previews Generator
+      run: python docs/preview_ui.py
+
+    - name: Build XPI Package
+      run: python build_xpi.py
+
+    - name: Upload XPI Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: zotero-superior-intelligence-xpi
+        path: dist/*.xpi

@@ -1,0 +1,7 @@
+# input: chrome relative content paths
+# output: gecko chrome package mapping
+# pos: registers chrome://zoteromineru/content/ and locale paths
+
+content zoteromineru chrome/content/
+locale zoteromineru zh-CN chrome/locale/zh-CN/
+locale zoteromineru en-US chrome/locale/en-US/

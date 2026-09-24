@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero/skin/zotero.css" type="text/css"?>
+<window id="si-library-window" title="SI · 文献库对话" width="1060" height="800" windowtype="zoteromineru:library"
+ xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
+ <script src="chrome://zotero/content/include.js"/>
+ <script src="chrome://zoteromineru/content/scripts/library_ui.js"/>
+ <html:style>
+ #si-library { box-sizing:border-box; height:100%; overflow:auto; padding:24px; background:#f6f8fb; color:#253247; color-scheme:light; font:13px/1.65 system-ui,sans-serif; }
+ #si-library * { box-sizing:border-box; }
+ #si-library header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+ #si-library h1 { margin:0; font-size:25px; font-weight:650; letter-spacing:-.03em; }
+ #si-library p { margin:6px 0; }
+ #si-library .muted { color:#66758a; font-size:12px; }
+ #si-library .eyebrow { color:#3865a4; font-size:10px; letter-spacing:.15em; }
+ #si-library .layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:18px; align-items:start; }
+ #si-library .card { background:#fff; border:1px solid #e1e7ef; border-radius:14px; padding:18px; min-width:0; }
+ #si-library h2 { font-size:14px; margin:0 0 12px; }
+ #si-library label.field { display:block; margin-bottom:12px; }
+ #si-library label.field > span { display:block; font-size:12px; color:#66758a; margin-bottom:5px; }
+ #si-library :is(button,select,input,textarea) { font:inherit; color:inherit; border:1px solid #d4dde8; border-radius:7px; background:#fff; }
+ #si-library :is(select,input:not([type="checkbox"]),textarea) { padding:7px 9px; width:100%; min-width:0; }
+ #si-library input[type="checkbox"] { accent-color:#386fc0; }
+ #si-library .check { display:flex; align-items:center; gap:6px; margin:6px 0; }
+ #si-library button { padding:6px 11px; min-height:32px; cursor:pointer; }
+ #si-library button:hover { background:#f0f5fb; }
+ #si-library button.primary { background:#3468b0; color:white; border-color:#3468b0; }
+ #si-library button:disabled { opacity:.5; cursor:default; }
+ #si-library :is(button,input,textarea,select,summary):focus-visible { outline:2px solid #3979ce; outline-offset:2px; }
+ #si-library .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+ #si-library .years { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+ #si-library .divider { margin:15px 0; border-top:1px solid #e8edf3; }
+ #si-library textarea { resize:vertical; min-height:85px; line-height:1.6; }
+ #si-library .conversation { min-height:220px; max-height:85vh; overflow:auto; resize:vertical; scroll-behavior:smooth; }
+ #si-library .conversation:has(details[open]) { height:68vh; }
+ #si-library .empty { padding:40px 20px; text-align:center; color:#7b899d; }
+ #si-library article { border-bottom:1px solid #e7ecf2; padding:14px 0 20px; }
+ #si-library article:first-child { padding-top:0; }
+ #si-library .question { font-weight:600; padding:9px 12px; background:#f2f6fc; border-radius:8px; white-space:pre-wrap; }
+ #si-library .answer { padding:10px 0; overflow-wrap:anywhere; }
+ #si-library .answer :is(h1,h2,h3,h4) { font-size:14px; margin:12px 0 6px; }
+ #si-library table { border-collapse:collapse; display:block; overflow:auto; max-width:100%; font-size:12px; }
+ #si-library :is(td,th) { padding:7px; border:1px solid #e1e7ef; }
+ #si-library blockquote { margin:6px 0; padding:4px 10px; border-left:2px solid #c3d5ec; color:#5c6b7e; white-space:pre-wrap; }
+ #si-library .citation { display:inline; padding:0 3px; min-height:0; border:0; color:#3468b0; background:#edf3fc; font-size:12px; }
+ #si-library details { margin:8px 0; }
+ #si-library summary { cursor:pointer; color:#42658e; }
+ #si-library .sources { max-height:none; overflow:visible; }
+ #si-library .source { padding:14px 0; border-bottom:1px solid #eef1f5; }
+ #si-library .source button { text-align:left; font-size:13px; white-space:normal; overflow-wrap:anywhere; }
+ #si-library .source blockquote { font-size:14px; line-height:1.85; padding:10px 14px; background:#f8fafc; border-radius:0 7px 7px 0; }
+ #si-library #library-status { margin-top:10px; min-height:22px; color:#486582; white-space:pre-wrap; }
+ #si-library [hidden] { display:none !important; }
+ @media(max-width:760px) { #si-library .layout { grid-template-columns:1fr; } #si-library { padding:14px; } }
+ </html:style>
+ <html:main id="si-library">
+  <html:header><html:div><html:div class="eyebrow">SI / LIBRARY INTELLIGENCE</html:div><html:h1>文献库对话</html:h1><html:p class="muted">从阅读积累中发现关联 · 仅使用已有资料，不读取 PDF 正文</html:p></html:div><html:button id="library-settings">模型设置</html:button></html:header>
+  <html:div class="layout">
+   <html:aside class="card" id="library-controls">
+    <html:h2>资料范围</html:h2>
+    <html:label class="field"><html:span>图书馆</html:span><html:select id="library-library"></html:select></html:label>
+    <html:label class="field"><html:span>处理范围</html:span><html:select id="library-mode"><html:option value="library">整个图书馆</html:option><html:option value="collection">指定分类</html:option><html:option value="selected">当前选中文献</html:option></html:select></html:label>
+    <html:div id="library-collection-box" hidden="hidden"><html:label class="field"><html:span>分类</html:span><html:select id="library-collection"></html:select></html:label><html:label class="check"><html:input id="library-recursive" type="checkbox" checked="checked"/>包含子分类</html:label></html:div>
+    <html:div id="library-selection-box" hidden="hidden"><html:button id="library-selection">重新读取文献库选择</html:button><html:p id="library-selected" class="muted"></html:p></html:div>
+    <html:label class="field"><html:span>年份范围（可选）</html:span><html:div class="years"><html:input id="library-from" type="number" min="1" max="9999" placeholder="起始年份" aria-label="起始年份"/><html:input id="library-to" type="number" min="1" max="9999" placeholder="结束年份" aria-label="结束年份"/></html:div></html:label>
+    <html:label class="field"><html:span>标签包含（可选）</html:span><html:input id="library-tag" placeholder="例如：待精读"/></html:label>
+    <html:div class="divider"></html:div>
+    <html:h2>资料类型</html:h2>
+    <html:p class="muted">元数据始终参与检索</html:p>
+    <html:label class="check"><html:input id="library-abstract" type="checkbox" checked="checked"/>摘要</html:label>
+    <html:label class="check"><html:input id="library-annotations" type="checkbox" checked="checked"/>高亮与批注</html:label>
+    <html:label class="check"><html:input id="library-notes" type="checkbox" checked="checked"/>用户笔记</html:label>
+    <html:label class="check"><html:input id="library-aiNotes" type="checkbox"/>AI 生成笔记</html:label>
+    <html:label class="field"><html:span>SI 高亮分类</html:span><html:select id="library-category"><html:option value="">全部资料</html:option><html:option>结论</html:option><html:option>机制</html:option><html:option>方法</html:option><html:option>空白</html:option><html:option>可引用</html:option></html:select></html:label>
+    <html:p class="muted">选择分类时仅使用该类 SI 高亮及批注；手动高亮保留其原文与颜色，不推断类别。</html:p>
+    <html:button id="library-index">更新本地索引</html:button>
+    <html:details id="library-audit" hidden="hidden"><html:summary>分类索引范围明细</html:summary><html:div id="library-audit-list"></html:div><html:p class="muted">同一文献可属于多个分类，整体计数已去重。筛选后数量受年份、标签和高亮类别影响。</html:p></html:details>
+    <html:p id="library-coverage" class="muted" aria-live="polite">发送问题前会自动检查资料更新。</html:p>
+   </html:aside>
+   <html:section class="card">
+    <html:div class="row"><html:label for="library-profile">模型</html:label><html:select id="library-profile" style="width:auto;max-width:75%"></html:select></html:div>
+    <html:div class="row"><html:button id="library-thinking" type="button" aria-pressed="false">思考：关闭</html:button><html:label for="library-limit">本次输出上限</html:label><html:select id="library-limit" style="width:auto"><html:option value="4096">4,096 Token</html:option><html:option value="8192" selected="selected">8,192 Token</html:option><html:option value="16384">16,384 Token</html:option><html:option value="32768">32,768 Token</html:option></html:select></html:div>
+    <html:p class="muted">思考开关仅适用于官方 DeepSeek 混合模型；其他模型使用服务端策略。开启思考可能增加时间与用量。触及输出上限时保留部分结果，可保存为“未完成”笔记。</html:p>
+    <html:p class="muted">本地索引不消耗 Token。问答只发送检索片段；范围综述会分批发送全部所选资料。</html:p>
+    <html:div class="divider"></html:div>
+    <html:div id="library-conversation" class="conversation"><html:div class="empty" id="library-empty">让零散的阅读，形成清晰的研究线索。<html:p class="muted">例如：这些文献对碳循环机制有哪些不同解释？</html:p></html:div></html:div>
+    <html:label class="field"><html:span>研究问题 / 综述目标</html:span><html:textarea id="library-question" maxlength="4000" placeholder="输入主题或问题；Ctrl / ⌘ + Enter 发送。范围综述可留空。"></html:textarea></html:label>
+    <html:div class="row"><html:button id="library-ask" class="primary">发送问题</html:button><html:button id="library-overview">范围综述</html:button><html:button id="library-stats">本地检索 / 统计</html:button><html:button id="library-stop" disabled="disabled">停止</html:button><html:button id="library-clear">清空对话</html:button></html:div>
+    <html:div id="library-status" role="status" aria-live="polite"></html:div>
+    <html:p class="muted">对话暂存于当前窗口，可逐条保存为 Zotero 笔记。已完成的综述批次在本次 Zotero 会话中可复用。</html:p>
+   </html:section>
+  </html:div>
+ </html:main>
+</window>

@@ -1,0 +1,413 @@
+.selection-popup {
+  max-width: calc(100vw - 16px) !important;
+}
+
+.selection-popup .colors {
+  justify-content: space-around;
+}
+
+.zotero-gpt-reader-prompt-controls {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 7px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 0 0;
+}
+
+.zotero-gpt-reader-prompt-controls.has-comment-settings {
+  grid-template-columns: 38px minmax(0, 1fr) 28px;
+}
+
+.zotero-gpt-reader-prompt-controls.has-selection-mode {
+  grid-template-columns: 42px minmax(0, 1fr) 28px;
+}
+
+.annotation-popup > .zotero-gpt-reader-prompt-controls {
+  flex: 0 0 auto;
+  padding: 6px 8px 8px;
+}
+
+.annotation-popup.zotero-gpt-has-reader-prompt-controls .comment .content {
+  min-height: 32px;
+}
+
+.zotero-gpt-reader-prompt-select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--material-background);
+  color: var(--fill-primary);
+  font: inherit;
+}
+
+.zotero-gpt-reader-prompt-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  /* Claudero accent shared with the sidepanel; Reader has no product-accent token. */
+  background: #b29ac9;
+  color: var(--material-background);
+  cursor: pointer;
+}
+
+.zotero-gpt-reader-prompt-settings-wrap {
+  position: relative;
+  box-sizing: border-box;
+  width: 38px;
+  height: 28px;
+}
+
+.zotero-gpt-reader-prompt-mode-wrap {
+  position: relative;
+  box-sizing: border-box;
+  width: 42px;
+  height: 28px;
+}
+
+.zotero-gpt-reader-prompt-mode,
+.zotero-gpt-reader-prompt-settings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-sizing: border-box;
+  height: 28px;
+  padding: 0 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--material-background);
+  color: var(--fill-secondary);
+  cursor: pointer;
+}
+
+.zotero-gpt-reader-prompt-mode {
+  width: 42px;
+}
+
+.zotero-gpt-reader-prompt-settings {
+  width: 38px;
+}
+
+.zotero-gpt-reader-prompt-mode:hover,
+.zotero-gpt-reader-prompt-mode[aria-expanded="true"],
+.zotero-gpt-reader-prompt-settings:hover,
+.zotero-gpt-reader-prompt-settings[aria-expanded="true"] {
+  background: var(--material-mix-quarternary);
+  color: var(--fill-primary);
+}
+
+.zotero-gpt-reader-prompt-mode:disabled,
+.zotero-gpt-reader-prompt-settings:disabled {
+  cursor: default;
+  opacity: .4;
+}
+
+.zotero-gpt-reader-prompt-mode > svg,
+.zotero-gpt-reader-prompt-selection-menu-item > svg,
+.zotero-gpt-reader-prompt-settings > svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+}
+
+.zotero-gpt-reader-prompt-mode > svg:last-child,
+.zotero-gpt-reader-prompt-settings > svg:last-child {
+  width: 10px;
+  height: 10px;
+}
+
+.zotero-gpt-reader-prompt-menu {
+  position: absolute;
+  top: calc(100% + 6px + var(--zotero-gpt-reader-prompt-menu-offset-y, 0px));
+  bottom: auto;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 174px;
+  max-width: calc(100vw - 12px);
+  max-height: calc(100vh - 12px);
+  overflow-y: auto;
+  padding: 4px;
+  border: var(--material-border);
+  border-radius: 6px;
+  background: var(--material-background);
+  pointer-events: auto;
+  transform: translateX(var(--zotero-gpt-reader-prompt-menu-offset-x, 0px));
+}
+
+.zotero-gpt-reader-prompt-menu.is-above {
+  top: auto;
+  bottom: calc(100% + 6px + var(--zotero-gpt-reader-prompt-menu-offset-y, 0px));
+}
+
+.zotero-gpt-reader-prompt-menu.is-below {
+  top: calc(100% + 6px + var(--zotero-gpt-reader-prompt-menu-offset-y, 0px));
+  bottom: auto;
+}
+
+.zotero-gpt-reader-prompt-menu-item {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fill-primary);
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+  white-space: nowrap;
+}
+
+.zotero-gpt-reader-prompt-selection-menu {
+  min-width: 188px;
+}
+
+.zotero-gpt-reader-prompt-comment-mode-menu {
+  min-width: 208px;
+}
+
+.zotero-gpt-reader-prompt-selection-menu-item,
+.zotero-gpt-reader-prompt-comment-mode-menu-item {
+  grid-template-columns: 14px 16px minmax(0, 1fr) 12px;
+}
+
+.zotero-gpt-reader-prompt-menu-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  color: var(--fill-secondary);
+  transform: rotate(-90deg);
+  transition: transform 140ms ease;
+}
+
+.zotero-gpt-reader-prompt-menu-chevron.is-expanded {
+  transform: rotate(0deg);
+}
+
+.zotero-gpt-reader-prompt-menu-chevron > svg {
+  display: block;
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+}
+
+.zotero-gpt-reader-prompt-comment-settings {
+  box-sizing: border-box;
+  margin: 0 0 4px;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--material-mix-quinary);
+  color: var(--fill-secondary);
+  font-size: 11px;
+}
+
+.zotero-gpt-reader-prompt-comment-settings-label {
+  color: var(--fill-secondary);
+}
+
+.zotero-gpt-reader-prompt-write-mode-options {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  isolation: isolate;
+  min-height: 29px;
+  padding: 2px;
+  gap: 0;
+  margin-top: 5px;
+  border-radius: 6px;
+  background: var(--material-mix-quarternary);
+  pointer-events: auto;
+}
+
+.zotero-gpt-reader-prompt-write-mode-options::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  z-index: 0;
+  width: calc(50% - 2px);
+  border-radius: 4px;
+  background: var(--material-button);
+  box-shadow: 0 1px 2px var(--fill-quarternary);
+  pointer-events: none;
+  transform: translateX(var(--zotero-gpt-write-mode-offset, 0%));
+  transition: transform 160ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.zotero-gpt-reader-prompt-write-mode-option {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 25px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fill-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  user-select: none;
+  transition: color 120ms ease, background-color 120ms ease;
+}
+
+.zotero-gpt-reader-prompt-write-mode-option:hover,
+.zotero-gpt-reader-prompt-write-mode-option:focus-visible,
+.zotero-gpt-reader-prompt-write-mode-option.is-selected {
+  background: transparent;
+  color: var(--fill-primary);
+  outline: none;
+}
+
+.zotero-gpt-reader-prompt-comment-settings .zotero-gpt-reader-prompt-color-picker {
+  padding: 8px 0 0;
+  border-top: 0;
+}
+
+.zotero-gpt-reader-prompt-color-picker {
+  padding: 7px 8px 6px;
+  border-top: 1px solid var(--color-border);
+  color: var(--fill-secondary);
+  font-size: 11px;
+}
+
+.zotero-gpt-reader-prompt-selection-menu
+  > .zotero-gpt-reader-prompt-color-picker {
+  margin: 0 0 4px;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--material-mix-quinary);
+}
+
+.zotero-gpt-reader-prompt-color-options {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.zotero-gpt-reader-prompt-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fill-secondary);
+  cursor: pointer;
+}
+
+.zotero-gpt-reader-prompt-color:hover,
+.zotero-gpt-reader-prompt-color:focus-visible {
+  background-color: var(--fill-quinary);
+  outline: none;
+}
+
+.zotero-gpt-reader-prompt-color:active,
+.zotero-gpt-reader-prompt-color[aria-pressed="true"] {
+  background-color: var(--fill-quarternary);
+}
+
+.zotero-gpt-reader-prompt-color > svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.zotero-gpt-reader-prompt-menu-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: currentColor;
+}
+
+.zotero-gpt-reader-prompt-menu-check > svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+}
+
+.zotero-gpt-reader-prompt-menu-item:hover,
+.zotero-gpt-reader-prompt-menu-item:focus-visible {
+  background: var(--material-mix-quarternary);
+  outline: none;
+}
+
+.zotero-gpt-reader-prompt-menu-item:disabled,
+.zotero-gpt-reader-prompt-color:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.zotero-gpt-reader-prompt-menu-item:disabled:hover,
+.zotero-gpt-reader-prompt-color:disabled:hover {
+  background: transparent;
+}
+
+.zotero-gpt-reader-prompt-send:hover {
+  opacity: .82;
+}
+
+.zotero-gpt-reader-prompt-send:disabled {
+  cursor: default;
+  opacity: .23;
+}
+
+.zotero-gpt-reader-prompt-send > svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.zotero-gpt-reader-prompt-send.has-annotation-icon > svg {
+  width: 14px;
+  height: 14px;
+}
+
+.zotero-gpt-reader-prompt-send.is-cancel > svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+  stroke: none;
+}
