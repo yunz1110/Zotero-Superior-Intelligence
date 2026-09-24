@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "zotero-mineru-ai@custom.org": {
+      "updates": [
+        {
+          "version": "1.0.0",
+          "update_link": "https://github.com/yunz1110/Zotero-Superior-Intelligence/releases/download/v1.0.0/zotero-superior-intelligence-1.0.0.xpi"
+        }
+      ]
+    }
+  }
+}

@@ -413,6 +413,39 @@
 - **异常情况**：无
 - **是否产生论文图表**：否
 
+---
+
+## 实验记录 013：Zotero 原生自动更新协议 update.json 配置与构建更新
+
+- **日期**：2026-09-24
+- **实验名称**：Zotero 原生自动更新协议 update.json 配置与构建更新
+- **代码版本**：v1.0.0
+- **输入数据**：
+  - 用户需求：“创建 然后重新打包 帮我配置”
+  - `plugin_src/manifest.json`, `dist/zotero-superior-intelligence-1.0.0.xpi`
+- **核心参数**：
+  - 自动更新清单路径：`update.json`
+  - 自动更新检测地址：`https://raw.githubusercontent.com/yunz1110/Zotero-Superior-Intelligence/main/update.json`
+  - 插件 ID：`zotero-mineru-ai@custom.org`
+  - 关联安装包：`https://github.com/yunz1110/Zotero-Superior-Intelligence/releases/download/v1.0.0/zotero-superior-intelligence-1.0.0.xpi`
+- **方法**：
+  1. 在根目录创建符合 Mozilla/Zotero Add-on Manager 规范的 `update.json` 清单，声明当前最新版本号 `1.0.0` 与 Release 下载直链。
+  2. 修改 `plugin_src/manifest.json`，将 `update_url` 指向本仓库主分支的 `update.json`，替代原有失效的外部占位地址。
+  3. 执行 `python build_xpi.py` 重新构建 `dist/zotero-superior-intelligence-1.0.0.xpi`，将包含正确更新地址的清单完整打入发布包。
+  4. 同步更新 `PROJECT_ARCHITECTURE.md` 架构文档。
+- **输出**：
+  - 新增 `update.json`
+  - 更新后的 `plugin_src/manifest.json`, `PROJECT_ARCHITECTURE.md`
+  - 重新打包的 `dist/zotero-superior-intelligence-1.0.0.xpi` (1125.22 KB)
+- **评价指标**：
+  - 自动更新链路闭环度：100%（更新清单 + 真实 update_url + 编译包完全对齐）
+  - 用户无感知升级支持：已具备
+- **主要发现**：
+  - 规范的 Zotero 扩展必须在首次分发安装包前将 `update_url` 固化为真实可达的源地址，一旦用户安装了带有正确更新源的初始版本，后续所有版本迭代均可通过 Zotero 客户端自动轮询拉取，无需用户手动维护。
+- **异常情况**：无
+- **是否产生论文图表**：否
+
+
 
 
 
