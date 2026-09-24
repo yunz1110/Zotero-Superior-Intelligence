@@ -7,6 +7,7 @@ on:
     branches: [ main, master ]
   release:
     types: [ published, created ]
+  workflow_dispatch:
 
 jobs:
   build-and-test:

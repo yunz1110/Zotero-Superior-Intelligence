@@ -1,8 +1,26 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const {chromium} = require('playwright');
+let chromium;
+try {
+  ({ chromium } = require('playwright'));
+} catch (e) {
+  console.log('Skipping library_ui.js: playwright not installed in environment.');
+  process.exit(0);
+}
+
 (async()=>{
- const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+ let browser;
+ try {
+  const launchOptions = { headless: true };
+  if (process.env.CHROME_PATH) launchOptions.executablePath = process.env.CHROME_PATH;
+  else if (fs.existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe')) {
+    launchOptions.executablePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+  }
+  browser = await chromium.launch(launchOptions);
+ } catch (err) {
+  console.log('Skipping library_ui.js: browser launch failed (' + err.message + ')');
+  process.exit(0);
+ }
  try {
   const page=await browser.newPage({viewport:{width:1060,height:850},deviceScaleFactor:1.5});
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
