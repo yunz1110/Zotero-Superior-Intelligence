@@ -12,7 +12,7 @@
 2. **Git 归档策略**：
    - 遵循开源最佳实践，历史构建安装包已通过 `.gitignore` 排除，避免二进制文件导致 Git 仓库历史体积持续膨胀。
    - 本地开发可随时通过 `python build_xpi.py`（或 `npm run build`）重新生成对应版本的安装包。
-   - 仓库内仅受控维护当前最新正式发布包 `zotero-superior-intelligence-2.0.7.xpi`。
+   - 仓库内仅受控维护当前最新正式发布包 `zotero-superior-intelligence-1.0.0.xpi`。
    - 正式版本发布建议通过 GitHub Releases 进行二进制附件分发。
 
 ---
@@ -22,7 +22,7 @@
 | 文件名 | 地位 | 功能描述 | 适用平台 |
 | :--- | :--- | :--- | :--- |
 | `DIST_CATALOG.md` | 目录架构文档 | 说明分发目录职责与安装包命名规则 | - |
-| `zotero-superior-intelligence-2.0.7.xpi` | 最新正式发布包 | 包含完整 UI、MinerU 客户端、多模型支持与智能高亮特性 | Zotero 7 / Zotero 10 (Gecko ESR) |
+| `zotero-superior-intelligence-1.0.0.xpi` | 最新正式发布包 | 包含完整 UI、MinerU 客户端、多模型支持与智能高亮特性 | Zotero 7 / Zotero 10 (Gecko ESR) |
 
 ---
 

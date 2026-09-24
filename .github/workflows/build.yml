@@ -6,11 +6,13 @@ on:
   pull_request:
     branches: [ main, master ]
   release:
-    types: [ created ]
+    types: [ published, created ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout repository
@@ -50,3 +52,9 @@ jobs:
       with:
         name: zotero-superior-intelligence-xpi
         path: dist/*.xpi
+
+    - name: Upload Release Asset (.xpi)
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/zotero-superior-intelligence-*.xpi

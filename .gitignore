@@ -5,7 +5,7 @@
 # --- Build Outputs & Binaries ---
 # 忽略历史构建产物，仅保留目录架构说明与最新稳定版安装包
 dist/*.xpi
-!dist/zotero-superior-intelligence-2.0.7.xpi
+!dist/zotero-superior-intelligence-1.0.0.xpi
 dist/*.tmp
 dist/*.zip
 

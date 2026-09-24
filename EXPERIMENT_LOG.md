@@ -289,6 +289,44 @@
 - **异常情况**：无
 - **是否产生论文图表**：否
 
+---
+
+## 实验记录 009：开源首发版本基线重置为 v1.0.0 与 Release 自动化流水线配置
+
+- **日期**：2026-09-24
+- **实验名称**：开源首发版本基线重置为 v1.0.0 与 Release 自动化流水线配置
+- **代码版本**：v1.0.0
+- **输入数据**：
+  - 用户请求：“我想更改当前的版本从1.0.0版本开始 并且release可以吗”
+  - 核心配置清单：`manifest.json`, `package.json`, `.gitignore`, `dist/DIST_CATALOG.md`, `README.md`, `.github/workflows/build.yml`
+- **核心参数**：
+  - 官方版本号：1.0.0 (SemVer 首发标准版本)
+  - 目标仓库地址：`https://github.com/yunz1110/Zotero-Superior-Intelligence`
+  - Release 挂载动作：`softprops/action-gh-release@v2`
+- **方法**：
+  1. **版本号基线归一**：
+     - 将插件清单 `plugin_src/manifest.json` 与 `package.json` 中的版本号统一设为 `1.0.0`。
+     - 更新 `README.md`、`PROJECT_ARCHITECTURE.md` 与 `dist/DIST_CATALOG.md` 的版本描述与下载链接。
+     - 更新 `.gitignore` 中的安装包白名单为 `!dist/zotero-superior-intelligence-1.0.0.xpi`。
+  2. **仓库远端链接对齐**：
+     - 将 `README.md` 与 `package.json` 中的所有仓库、Issue、PR 与 Releases 链接对齐为用户实际 GitHub 仓库 `yunz1110/Zotero-Superior-Intelligence`。
+  3. **GitHub Actions 自动化 Release 配置**：
+     - 在 `.github/workflows/build.yml` 中赋予 `permissions: contents: write`。
+     - 新增发布 Release 时自动编译并挂载 `dist/zotero-superior-intelligence-*.xpi` 附件的 Action 步骤。
+  4. **构建验证**：
+     - 运行 `python build_xpi.py` 重新生成 `dist/zotero-superior-intelligence-1.0.0.xpi`（1125.22 KB）。
+- **输出**：
+  - 更新后的全部项目配置文件与架构文档
+  - 生产就绪安装包：`dist/zotero-superior-intelligence-1.0.0.xpi`
+- **评价指标**：
+  - 版本号一致性：100%（全工程统一归一为 v1.0.0）
+  - Release 自动化接入率：100%
+- **主要发现**：
+  - 将正式对外开源版本重置为 v1.0.0 符合语义化版本管理标准，更清晰直观；通过 GitHub Actions 自动化挂载 Release 附件，研究者后续发布新版无需手工编译上传，仅需打 Tag 或点击 Release 即可全自动流转。
+- **异常情况**：无
+- **是否产生论文图表**：否
+
+
 
 
 

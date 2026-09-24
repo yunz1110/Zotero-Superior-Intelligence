@@ -5,8 +5,8 @@
 [![Zotero](https://img.shields.io/badge/Zotero-7.0%20%7C%2010.0-blue.svg)](https://www.zotero.org/)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](LICENSE)
 [![MinerU API](https://img.shields.io/badge/MinerU%20API-v1%20%7C%20v4-orange.svg)](https://mineru.net/)
-[![Release](https://img.shields.io/badge/Release-v2.0.7-brightgreen.svg)](dist/DIST_CATALOG.md)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-brightgreen.svg)](https://github.com/yunz1110/Zotero-Superior-Intelligence/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yunz1110/Zotero-Superior-Intelligence/pulls)
 
 **为现代科研工作流打造的 Zotero 7/10 智能文献助手**  
 深度集成 OpenDataLab MinerU 高精度文档解析与多主流大模型（DeepSeek、OpenAI、Claude、Ollama），打造阅读、解析、精读、检索与笔记沉淀的全链路学术闭环。
@@ -71,8 +71,8 @@
 
 ### 方式一：直接安装官方预编译包（推荐）
 
-1. 前往本仓库 [Releases](https://github.com/) 页面，或在 `dist/` 目录中下载最新版安装包：
-   - 📥 **`zotero-superior-intelligence-2.0.7.xpi`**
+1. 前往本仓库 [Releases](https://github.com/yunz1110/Zotero-Superior-Intelligence/releases) 页面，或在 `dist/` 目录中下载最新版安装包：
+   - 📥 **`zotero-superior-intelligence-1.0.0.xpi`**
 2. 启动 **Zotero**（支持 Zotero 7.0 及以上版本）。
 3. 点击顶部菜单栏：**工具 (Tools)** -> **插件 (Add-ons / Plugins)**。
 4. 将下载的 `.xpi` 文件直接**拖入插件窗口**（或点击右上角齿轮图标选择 `Install Add-on From File...`）。
@@ -82,8 +82,8 @@
 
 ```bash
 # 1. 克隆代码仓库
-git clone https://github.com/your-username/zotero-superior-intelligence.git
-cd zotero-superior-intelligence
+git clone https://github.com/yunz1110/Zotero-Superior-Intelligence.git
+cd Zotero-Superior-Intelligence
 
 # 2. 执行打包脚本
 python build_xpi.py
@@ -91,7 +91,7 @@ python build_xpi.py
 npm run build
 
 # 3. 生成的安装包位于 dist/ 目录：
-# dist/zotero-superior-intelligence-2.0.7.xpi
+# dist/zotero-superior-intelligence-1.0.0.xpi
 ```
 
 ---
@@ -156,7 +156,7 @@ zotero-superior-intelligence/
 │   └── ui-preview/            # 离线预览与截图资产
 └── dist/                      # 分发产物目录
     ├── DIST_CATALOG.md        # 分发目录规范说明
-    └── zotero-superior-intelligence-2.0.7.xpi
+    └── zotero-superior-intelligence-1.0.0.xpi
 ```
 
 ---
