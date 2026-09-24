@@ -4,11 +4,13 @@
 
 [![Zotero 10 Ready](https://img.shields.io/badge/Zotero-10.0%20%7C%207.0-blue.svg)](https://www.zotero.org/)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](LICENSE)
+[![100% Free & Open Source](https://img.shields.io/badge/100%25-Free%20%26%20Open%20Source-brightgreen.svg)](#-纯粹开源零门槛人人用得起)
+[![Zero Paywall](https://img.shields.io/badge/Zero-Paywall-blue.svg)](#-纯粹开源零门槛人人用得起)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-brightgreen.svg)](https://github.com/yunz1110/Zotero-Superior-Intelligence/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yunz1110/Zotero-Superior-Intelligence/pulls)
 
-**专为下一代 Zotero 10 深度定制 · Zotero 生态中更强、更极致的顶级 AI 学术伴侣**  
-极速解析 · 秒级文献总结 · 原文沉浸对话 · 智能重点高亮 · 全库交叉知识库
+**专为下一代 Zotero 10 深度定制 · 100% 永久免费开源 · 让每个人都用得起的顶配 AI 学术伴侣**  
+零付费门槛 · 无强制订阅 · 极速解析 · 秒级文献总结 · 原文沉浸对话 · 智能重点高亮 · 全库交叉知识库
 
 [English](#english-summary) | [核心特性](#-核心功能矩阵) | [快速安装](#-快速安装指南) | [配置说明](#-配置与使用指南) | [开发构建](#-开发者指南)
 
@@ -17,13 +19,14 @@
 ---
 
 > [!IMPORTANT]
-> ### 🚀 为什么说这是 Zotero 里更强大的 AI 插件？
+> ### 🚀 为什么说这是 Zotero 里更强大、真正人人用得起的 AI 插件？
 > 
-> 传统的 Zotero AI 扩展大多停留在简单的 API 转发或慢吞吞的文档抓取，面对长篇学术论文、复杂双栏排版时经常出现假死卡顿、总结漫长或严重丢失上下文。
+> 现存的许多 Zotero AI 扩展要么充斥着昂贵的商业会员付费墙、限制使用额度，要么底层架构老旧，面对长篇学术论文、复杂双栏排版时频繁假死卡顿、总结迟缓且严重丢失上下文。
 > 
-> **Zotero Superior Intelligence (SI)** 基于 **Zotero 10（Gecko ESR 现代平台）** 原生底层架构深度定制，彻底重构了文献处理流：
+> **Zotero Superior Intelligence (SI)** 专为 **Zotero 10（Gecko ESR 现代平台）** 原生底层架构深度定制，彻底颠覆传统体验：
+> - 💚 **100% 永久免费开源，零套路、人人用得起**：彻底打破商业付费墙，**全功能零保留、完全无保留地免费开放**！无需购买任何会员，原生支持免 Token 极速解析，搭配极低廉的 DeepSeek（1 元读上百篇论文）或完全免费的本地 Ollama 私有模型，让每一位学生和科研工作者都能零负担享受顶级学术 AI 生产力。
 > - ⚡ **秒级极速解析与文献总结**：优化高速正文提取与流式通信架构，单篇文献极速精读，动态字符打字机实时反馈，告别漫长盲等。
-> - 🤖 **深度适配 Zotero 10 原生现代界面**：充分利用 Zotero 10 现代 UI 渲染管线与异步非阻塞调度，界面丝滑无卡顿。
+> - 🤖 **深度适配 Zotero 10 原生现代架构**：充分利用 Zotero 10 现代 UI 渲染管线与异步非阻塞调度，界面丝滑无卡顿。
 > - 💬 **PDF 原文侧边栏深度精读对话**：随读随问，支持大上下文学术长文研读、回答就地在线编辑润色与一键沉淀为独立笔记。
 > - 🖋️ **学术文献智能定位高亮**：全自动识别核心结论、实验方法与创新机制，精准在 PDF 原文生成矢量色彩高亮批注。
 > - 📚 **全库知识库联动检索与跨篇对比**：离线倒排索引引擎，提出研究问题即可跨全库检索多篇文献，生成对比分析并附带精确引文溯源卡片。
@@ -34,30 +37,34 @@
 
 ## ✨ 核心功能矩阵
 
-### 1. ⚡ 极速正文解析与秒级长文总结
+### 1. 💚 纯粹开源零门槛，人人用得起的真正生产力
+- **零商业付费墙 (Zero Paywall)**：没有任何隐藏收费，没有 VIP/Pro 权限限制，代码 100% 透明开源。
+- **极致平民的使用成本**：支持免 Token 轻量解析；兼容超高性价比大模型（如 DeepSeek，百万 Tokens 仅需 1~2 元，精读一篇顶会论文不到 1 分钱），更支持通过 Ollama / vLLM / LocalAI 零成本本地离线运行，彻底实现学术自由。
+
+### 2. ⚡ 极速正文解析与秒级长文总结
 - **高速流式处理**：告别传统插件长达数十秒的转圈假死。采用会话级内存缓存与流式打字机机制，分析进度实时反馈，秒级呈现学术洞见。
 - **高保真结构化支撑**：底层融合极速文本提取与高精度结构化引擎（支持可选的 MinerU 免 Token 极速模式与精准解析模式），双栏排版、三线表格与学术公式均能高保真还原。
 - **自动化成果沉淀**：解析总结完成后，自动为条目生成排版优美的 Markdown 子笔记，并自动追加索引标签。
 
-### 2. 💬 PDF 原文侧边栏沉浸式研读助手
+### 3. 💬 PDF 原文侧边栏沉浸式研读助手
 - **原生侧边栏无缝集成**：内嵌于 Zotero 10 PDF 阅读器右侧工具抽屉，边读原文边进行深度学术互动。
 - **学术快捷指令**：预置“核心贡献总结”、“技术方法详解”、“实验局限剖析”、“核心结论提炼”等常用科研指令。
 - **回答在线编辑与复制**：生成的学术回答支持**就地编辑修改**与**一键复制**，研究者二次润色后可直接一键同步至文献笔记。
 
-### 3. 🖋️ 学术文献智能定位高亮 (Auto-Highlight)
+### 4. 🖋️ 学术文献智能定位高亮 (Auto-Highlight)
 - **智能要点抽取**：AI 自动研读并识别原文中的“研究结论”、“实验方法”、“创新机制”等学术核心要点。
 - **真实坐标矢量高亮**：根据 PDF 页面字符坐标流，自动在 PDF 原文中创建语义色彩编码的高亮批注，告别繁重的手工划重点。
 
-### 4. 📚 全库文献知识库与跨篇综合问答
+### 5. 📚 全库文献知识库与跨篇综合问答
 - **本地知识索引构建**：离线提取个人文献库的所有元数据、摘要与关联笔记，构建结构化知识检索索引。
 - **跨文献交叉对话**：针对一个综合性课题向全库提问，AI 跨多篇文献交叉检索提取事实，输出结构化综述并附带可点击跳转的**引文溯源卡片**。
 
-### 5. 🤖 多大模型多场景秒级切换 (Multi-Profiles)
+### 6. 🤖 多大模型多场景秒级切换 (Multi-Profiles)
 - **主流服务商全覆盖**：原生支持 **DeepSeek**（`deepseek-flash`, `deepseek-chat`）、**OpenAI**（GPT-4o, GPT-4o-mini）、**Anthropic Claude**，以及 **Ollama / vLLM** 本地私有化部署。
 - **多场景独立配置**：支持保存多个独立的配置卡片（如“快读模型”、“深度推理模型”、“英文润色模型”），工作台中一键秒切。
 - **Token 消耗精准计量**：实时统计每个模型调用的 Prompt Tokens、Completion Tokens 及费用消耗，科研预算一目了然。
 
-### 6. 🔄 批量队列调度与中断保护 (Batch Processing)
+### 7. 🔄 批量队列调度与中断保护 (Batch Processing)
 - **串行异步队列**：支持多选数十篇文献一键批量解析与总结。
 - **失败隔离机制**：单篇文献因网络超时或异常不会阻断后续任务，支持中途安全暂停与断点续提。
 
@@ -79,7 +86,7 @@
 
 1. 前往本仓库 [Releases](https://github.com/yunz1110/Zotero-Superior-Intelligence/releases) 页面，或在 `dist/` 目录中下载最新版安装包：
    - 📥 **`zotero-superior-intelligence-1.0.0.xpi`**
-2. 启动 **Zotero**（专为 Zotero 10 优化，亦支持 Zotero 7.0 及以上版本）。
+2. 启动 **Zotero**（专为 Zotero 10 深度优化，亦向下兼容 Zotero 7.0 及以上版本）。
 3. 点击顶部菜单栏：**工具 (Tools)** -> **插件 (Add-ons / Plugins)**。
 4. 将下载的 `.xpi` 文件直接**拖入插件窗口**（或点击右上角齿轮图标选择 `Install Add-on From File...`）。
 5. 提示安装成功后，重启 Zotero 即可开启全新体验。
@@ -110,7 +117,7 @@ npm run build
 ### 2. 配置大语言模型 (LLM)
 - 选择服务商（如 DeepSeek、OpenAI、Claude 或 Custom/Ollama）。
 - 填写 API Base（如 `https://api.deepseek.com/v1`）与 API Key。
-- 选择模型名称（推荐速度快、成本低的 `deepseek-flash`）。
+- 选择模型名称（推荐速度快、成本极低的 `deepseek-flash`）。
 - 点击 **测试大模型连接** 确保网络与授权正常。
 
 ### 3. 文档高保真解析配置（可选）
@@ -183,11 +190,12 @@ npm run test:all
 
 ## <a id="english-summary"></a>🌐 English Summary
 
-**Zotero Superior Intelligence (SI)** is the ultimate, next-generation AI literature copilot tailor-made for **Zotero 10** (and compatible with Zotero 7). It delivers lightning-fast document parsing and paper synthesis, eliminating the sluggish lag of conventional extensions.
+**Zotero Superior Intelligence (SI)** is a 100% free and open-source AI literature copilot tailored for **Zotero 10** (and compatible with Zotero 7). Built with **zero paywalls and no subscriptions**, it is designed to be affordable and accessible to every student and researcher worldwide.
 
 ### Key Highlights:
-- ⚡ **Lightning-Fast Paper Synthesis**: Real-time streaming response, instant insight extraction, zero hanging.
-- 🎯 **Designed for Zotero 10**: Deep integration with the Gecko ESR runtime and modern asynchronous architecture.
+- 💚 **100% Free & Open-Source**: Zero paywalls, no mandatory subscriptions. Works seamlessly with ultra-cheap DeepSeek tokens or completely free local Ollama models.
+- ⚡ **Lightning-Fast Paper Synthesis**: Real-time streaming response, instant insight extraction, zero UI freezing.
+- 🎯 **Tailored for Zotero 10**: Deep integration with Gecko ESR modern architecture and asynchronous rendering pipelines.
 - 💬 **Interactive PDF Reader Chat**: Context-aware sidebar conversation, on-the-fly editable answers, and one-click note saving.
 - 🖋️ **Intelligent Scholarly Auto-Highlighting**: Automatic detection and coordinate-based PDF annotation of key findings, methods, and mechanisms.
 - 📚 **Library-Wide Cross-Paper Knowledge Base**: Local inverted indexing, comparative synthesis, and precise citation cards.
